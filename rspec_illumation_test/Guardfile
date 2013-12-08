@@ -1,0 +1,12 @@
+# A sample Guardfile
+# More info at https://github.com/guard/guard#readme
+
+guard :rspec, cmd: 'rspec -f p -f p -o test.txt' do
+  watch(%r{^spec/.+_spec\.rb$})
+end
+
+guard :shell do
+  watch('test.txt') do
+    `cat test.txt| bin/rspec_coverage.rb  | ruby ../coverage_sender/test.rb YOUR_SERIAL_PORT`
+  end
+end
